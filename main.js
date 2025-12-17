@@ -3,9 +3,12 @@ var roleBuilder = require("role.builder");
 var roleRepair = require("role.repair");
 var roleHealer = require("role.healer");
 
+var acfFunctions = require("acfFunctions");
+
 module.exports.loop = function () {
   var creepsquantity = Game.spawns["Spawn1"].room.find(FIND_MY_CREEPS).length;
   var emerg = false;
+  // INICIO SPAWNS
   if (creepsquantity < 12) {
     emerg = true;
     for (var i = 0; i <= 4; i++) {
@@ -57,6 +60,9 @@ module.exports.loop = function () {
       }
     }
   }
+  // FIM SPAWNS
+
+  // INICIO CREEP ROLES
   var cancelarOutras = false;
   for (var name in Game.creeps) {
     var creep = Game.creeps[name];
@@ -88,4 +94,14 @@ module.exports.loop = function () {
       roleRepair.trabalhar(creep, emerg);
     }
   }
+  // FIM CREEP ROLES
+
+  // INICIO TOWER ROLES
+  var estruturas = creep.room.find(FIND_MY_STRUCTURES, {
+    filter: (object) => object.structureType == "tower",
+  });
+  for (var torre in estruturas) {
+    acfFunctions.torreRepair(estruturas[torre]);
+  }
+  // FIM TOWER ROLES
 };

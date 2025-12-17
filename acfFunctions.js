@@ -178,6 +178,12 @@ var acfFunctions = {
       }
     }
   },
+  torreRepair(torre) {
+    var structureTarget = torre.pos.findClosestByPath(FIND_STRUCTURES, {
+      filter: (object) => object.hits < clamp(object.hitsMax / 6, 0, 10000),
+    });
+    torre.repair(structureTarget);
+  },
 };
 
 module.exports = acfFunctions;
