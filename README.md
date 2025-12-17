@@ -1,1 +1,1 @@
-Scripts usados por mim no game "Screeps: World"
+My scripts for the game "Screep: World"
