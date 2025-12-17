@@ -156,6 +156,28 @@ var acfFunctions = {
       }
     }
   },
+  abastecer(creep, unidade) {
+    if (
+      creep.store["energy"] == 0 &&
+      Game.spawns["Spawn1"].store["energy"] > 150
+    ) {
+      fullWithdraw(creep);
+      return 0;
+    } else if (creep.transfer(unidade, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+      if (
+        creep.store.getFreeCapacity("energy") > 0 &&
+        Game.spawns["Spawn1"].store["energy"] > 150
+      ) {
+        fullWithdraw(creep);
+        return 0;
+      } else if (creep.store["energy"] > 0) {
+        creep.moveTo(unidade);
+        return 0;
+      } else {
+        return 1;
+      }
+    }
+  },
 };
 
 module.exports = acfFunctions;

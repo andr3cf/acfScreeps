@@ -50,7 +50,7 @@ module.exports.loop = function () {
         Game.creeps["Healer" + i] == null &&
         Game.spawns["Spawn1"].store["energy"] >= 300
       ) {
-        Game.spawns["Spawn1"].spawnCreep([MOVE, HEAL], "Healer" + i, {
+        Game.spawns["Spawn1"].spawnCreep([MOVE, CARRY, HEAL], "Healer" + i, {
           memory: { role: "Healer" },
         });
         break;

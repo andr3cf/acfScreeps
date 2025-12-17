@@ -1,3 +1,5 @@
+const acfFunctions = require("./acfFunctions");
+
 var roleHealer = {
   trabalhar(creep) {
     var creeplist = creep.room.find(FIND_MY_CREEPS);
@@ -7,6 +9,19 @@ var roleHealer = {
           creep.moveTo(creepy);
         }
         return;
+      }
+    }
+    var estruturas = creep.room.find(FIND_MY_STRUCTURES, {
+      filter: (object) => object.structureType == "tower",
+    });
+    for (var torre in estruturas) {
+      if (estruturas[torre].store.getFreeCapacity("energy") > 0) {
+        if (acfFunctions.abastecer(creep, estruturas[torre]) == 0) {
+          return;
+        }
+        break;
+      } else {
+        continue;
       }
     }
     creep.moveTo(23, 30);
