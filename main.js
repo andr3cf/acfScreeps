@@ -6,7 +6,7 @@ var roleHealer = require("role.healer");
 module.exports.loop = function () {
   var creepsquantity = Game.spawns["Spawn1"].room.find(FIND_MY_CREEPS).length;
   var emerg = false;
-  if (creepsquantity < 14) {
+  if (creepsquantity < 12) {
     emerg = true;
     for (var i = 0; i <= 4; i++) {
       if (
@@ -20,7 +20,7 @@ module.exports.loop = function () {
         break;
       }
     }
-    for (var i = 0; i <= 3; i++) {
+    for (var i = 0; i <= 1; i++) {
       if (
         Game.spawns["Spawn1"].spawning == null &&
         Game.creeps["Builder" + i] == null &&
@@ -44,7 +44,7 @@ module.exports.loop = function () {
         break;
       }
     }
-    for (var i = 0; i <= 1; i++) {
+    for (var i = 0; i < 1; i++) {
       if (
         Game.spawns["Spawn1"].spawning == null &&
         Game.creeps["Healer" + i] == null &&

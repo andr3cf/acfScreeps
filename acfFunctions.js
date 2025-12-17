@@ -102,15 +102,21 @@ var acfFunctions = {
       } else {
         creep.moveTo(22, 35);
       }
-      return;
-    }
-
-    if (creep.build(constructionSites) == ERR_NOT_ENOUGH_RESOURCES) {
+    } else if (
+      creep.build(constructionSites) == ERR_NOT_ENOUGH_RESOURCES &&
+      Game.spawns["Spawn1"].store["energy"] > 200
+    ) {
       fullWithdraw(creep);
     } else if (creep.build(constructionSites) == ERR_NOT_IN_RANGE) {
-      if (creep.store.getFreeCapacity() > 0) {
+      if (
+        creep.store.getFreeCapacity() > 0 &&
+        Game.spawns["Spawn1"].store["energy"] > 200
+      ) {
         fullWithdraw(creep);
-      } else {
+      } else if (
+        creep.store.getFreeCapacity("energy") <
+        creep.store.getCapacity("energy")
+      ) {
         creep.moveTo(constructionSites);
       }
     }
@@ -129,21 +135,19 @@ var acfFunctions = {
   repararClosest(creep) {
     if (creep.memory.target != null) {
       var estrutura = Game.getObjectById(creep.memory.target);
-      //console.log('Achou='+estrutura);
       if (estrutura == null) {
         creep.memory.target = null;
         return;
       }
-      if (estrutura.hits >= clamp(estrutura.hitsMax, 0, 10000)) {
+      if (estrutura.hits >= clamp(estrutura.hitsMax, 0, 20000)) {
         creep.memory.target = null;
       } else {
         reparar(creep);
       }
     } else {
       var structureTarget = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-        filter: (object) => object.hits < clamp(object.hitsMax / 4, 0, 1000),
+        filter: (object) => object.hits < clamp(object.hitsMax / 4, 0, 10000),
       });
-      //console.log('AchouNovo='+structureTarget);
       if (structureTarget == null) {
         creep.memory.target = null;
         creep.moveTo(18, 31);
