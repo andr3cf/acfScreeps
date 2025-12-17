@@ -3,12 +3,7 @@ var roleBuilder = require("role.builder");
 var roleRepair = require("role.repair");
 var roleHealer = require("role.healer");
 
-var tick = 0;
-
 module.exports.loop = function () {
-  //console.log('Tick: ' + tick);
-  //console.log('Energia: ' + Game.spawns['Spawn1'].room.energyAvailable);
-  //tick++;
   var creepsquantity = Game.spawns["Spawn1"].room.find(FIND_MY_CREEPS).length;
   var emerg = false;
   if (creepsquantity < 14) {
@@ -93,4 +88,4 @@ module.exports.loop = function () {
       roleRepair.trabalhar(creep, emerg);
     }
   }
-}; // SEPARAR POR CLASSES DE TRABALHADOR
+};
