@@ -68,11 +68,14 @@ module.exports.loop = function () {
 
     if (creep.ticksToLive < 200) {
       cancelarOutras = true;
-      if (creep.memory.role == "Worker") {
-        creep.transfer(Game.spawns["Spawn1"], RESOURCE_ENERGY);
-      }
       if (Game.spawns["Spawn1"].renewCreep(creep) == ERR_NOT_IN_RANGE) {
-        creep.moveTo(Game.spawns["Spawn1"]);
+        creep.moveTo(14, 38);
+      } else if (
+        Game.spawns["Spawn1"].renewCreep(creep) == ERR_NOT_ENOUGH_ENERGY &&
+        creep.store["energy"] > 0
+      ) {
+        creep.transfer(Game.spawns["Spawn1"], RESOURCE_ENERGY);
+        Game.spawns["Spawn1"].renewCreep(creep);
       }
       continue;
     }
