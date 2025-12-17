@@ -88,7 +88,20 @@ var acfFunctions = {
     );
 
     if (constructionSites == null || constructionSites == undefined) {
-      creep.moveTo(22, 35);
+      if (Game.spawns["Spawn1"].store["energy"] > 200) {
+        if (
+          creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE
+        ) {
+          creep.moveTo(creep.room.controller);
+        } else if (
+          creep.upgradeController(creep.room.controller) ==
+          ERR_NOT_ENOUGH_RESOURCES
+        ) {
+          fullWithdraw(creep);
+        }
+      } else {
+        creep.moveTo(22, 35);
+      }
       return;
     }
 
