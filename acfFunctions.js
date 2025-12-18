@@ -25,26 +25,55 @@ function minerarBuilder(creep) {
 }
 
 function storeEnergy(creep) {
+  var extensions = creep.room.find(FIND_STRUCTURES, {
+    filter: (object) =>
+      object.structureType == "extension" && object.store["energy"] < 50,
+  });
+
   if (
-    creep.transfer(Game.spawns["Spawn1"], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
+    creep.name == "Worker2" ||
+    creep.name == "Worker3" ||
+    creep.name == "Worker4"
   ) {
-    creep.moveTo(Game.spawns["Spawn1"]);
-  } else if (
-    creep.transfer(Game.spawns["Spawn1"], RESOURCE_ENERGY) == ERR_FULL
-  ) {
-    var extensions = creep.room.find(FIND_STRUCTURES, {
-      filter: (object) =>
-        object.structureType == "extension" && object.store["energy"] < 50,
+    var closestExtension = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+      filter: function (objeto) {
+        if (objeto.structureType != "extension") {
+          return false;
+        }
+
+        if (objeto.store.getFreeCapacity("energy") == 0) {
+          return false;
+        }
+
+        return true;
+      },
     });
-    if (
-      extensions.length == 0 ||
-      extensions == null ||
-      extensions == undefined
-    ) {
+    if (closestExtension == null || closestExtension == undefined) {
       return;
-    } else {
-      if (creep.transfer(extensions[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-        creep.moveTo(extensions[0]);
+    }
+    if (creep.transfer(closestExtension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+      creep.moveTo(closestExtension);
+    }
+  } else {
+    if (
+      creep.transfer(Game.spawns["Spawn1"], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
+    ) {
+      creep.moveTo(Game.spawns["Spawn1"]);
+    } else if (
+      creep.transfer(Game.spawns["Spawn1"], RESOURCE_ENERGY) == ERR_FULL
+    ) {
+      if (
+        extensions.length == 0 ||
+        extensions == null ||
+        extensions == undefined
+      ) {
+        return;
+      } else {
+        if (
+          creep.transfer(extensions[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
+        ) {
+          creep.moveTo(extensions[0]);
+        }
       }
     }
   }
