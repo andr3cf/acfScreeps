@@ -49,6 +49,28 @@ function storeEnergy(creep) {
       },
     });
     if (closestExtension == null || closestExtension == undefined) {
+      if (
+        creep.transfer(Game.spawns["Spawn1"], RESOURCE_ENERGY) ==
+        ERR_NOT_IN_RANGE
+      ) {
+        creep.moveTo(Game.spawns["Spawn1"]);
+      } else if (
+        creep.transfer(Game.spawns["Spawn1"], RESOURCE_ENERGY) == ERR_FULL
+      ) {
+        if (
+          extensions.length == 0 ||
+          extensions == null ||
+          extensions == undefined
+        ) {
+          return;
+        } else {
+          if (
+            creep.transfer(extensions[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
+          ) {
+            creep.moveTo(extensions[0]);
+          }
+        }
+      }
       return;
     }
     if (creep.transfer(closestExtension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
