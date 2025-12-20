@@ -1,10 +1,10 @@
-var roleHarvester = require("role.harvester");
-var roleBuilder = require("role.builder");
-var roleRepair = require("role.repair");
-var roleHealer = require("role.healer");
-var roleClaimer = require("role.claimer");
+const roleHarvester = require("role.harvester");
+const roleBuilder = require("role.builder");
+const roleRepair = require("role.repair");
+const roleHealer = require("role.healer");
+const roleClaimer = require("role.claimer");
 
-var acfFunctions = require("acfFunctions");
+const acfFunctions = require("acfFunctions");
 
 module.exports.loop = function () {
   var creepsquantity = Game.spawns["Spawn1"].room.find(FIND_MY_CREEPS).length;
@@ -91,6 +91,8 @@ module.exports.loop = function () {
       roleBuilder.trabalhar(creep, emerg);
     } else if (creep.memory.role == "Healer") {
       roleHealer.trabalhar(creep);
+    } else if (creep.memory.role == "Claimer") {
+      roleClaimer.trabalhar(creep);
     } else {
       roleRepair.trabalhar(creep, emerg);
     }

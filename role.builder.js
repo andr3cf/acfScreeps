@@ -1,4 +1,4 @@
-var acfFunctions = require("acfFunctions");
+const acfFunctions = require("acfFunctions");
 
 var prioridade = false;
 
