@@ -37,7 +37,12 @@ function storeEnergy(creep) {
   ) {
     var closestExtension = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
       filter: function (objeto) {
-        if (objeto.structureType != "extension") {
+        if (
+          !(
+            objeto.structureType == "extension" ||
+            objeto.structureType == "storage"
+          )
+        ) {
           return false;
         }
 
