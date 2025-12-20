@@ -2,6 +2,7 @@ var roleHarvester = require("role.harvester");
 var roleBuilder = require("role.builder");
 var roleRepair = require("role.repair");
 var roleHealer = require("role.healer");
+var roleClaimer = require("role.claimer");
 
 var acfFunctions = require("acfFunctions");
 
