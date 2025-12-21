@@ -111,7 +111,7 @@ module.exports.loop = function () {
     } else if (creep.memory.role == "Claimer") {
       roleClaimer.trabalhar(creep);
     } else if (creep.memory.role == "Upgrader") {
-      roleUpgrader.trabalhar(creep);
+      roleUpgrader.trabalhar(creep, emerg);
     } else {
       roleRepair.trabalhar(creep, emerg);
     }
