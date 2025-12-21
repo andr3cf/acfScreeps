@@ -9,7 +9,6 @@ var roleArcher = {
     }
 
     if (hostiles.length === 0 || hostiles == undefined || hostiles == null) {
-      console.log("abaixar guarda");
       creep.moveTo(10, 34);
       return;
     }
