@@ -4,6 +4,7 @@ const roleRepair = require("role.repair");
 const roleHealer = require("role.healer");
 const roleClaimer = require("role.claimer");
 const roleUpgrader = require("role.upgrader");
+const roleArcher = require("role.archer");
 
 const acfFunctions = require("acfFunctions");
 
@@ -11,7 +12,7 @@ module.exports.loop = function () {
   var creepsquantity = Game.spawns["Spawn1"].room.find(FIND_MY_CREEPS).length;
   var emerg = false;
   // INICIO SPAWNS
-  if (creepsquantity < 14) {
+  if (creepsquantity < 16) {
     emerg = true;
     for (var i = 0; i <= 4; i++) {
       if (
@@ -77,6 +78,52 @@ module.exports.loop = function () {
         break;
       }
     }
+    for (var i = 0; i <= 1; i++) {
+      if (
+        Game.spawns["Spawn1"].spawning == null &&
+        Game.creeps["Archer" + i] == null &&
+        Game.spawns["Spawn1"].store["energy"] >= 300
+      ) {
+        Game.spawns["Spawn1"].spawnCreep(
+          [
+            TOUGH,
+            TOUGH,
+            TOUGH,
+            TOUGH,
+            TOUGH,
+            TOUGH,
+            TOUGH,
+            TOUGH,
+            TOUGH,
+            TOUGH,
+            TOUGH,
+            TOUGH,
+            TOUGH,
+            TOUGH,
+            TOUGH,
+            TOUGH,
+            TOUGH,
+            TOUGH,
+            TOUGH,
+            TOUGH,
+            MOVE,
+            MOVE,
+            MOVE,
+            MOVE,
+            MOVE,
+            MOVE,
+            MOVE,
+            MOVE,
+            RANGED_ATTACK,
+          ],
+          "Archer" + i,
+          {
+            memory: { role: "Archer" },
+          }
+        );
+        break;
+      }
+    }
   }
   // FIM SPAWNS
 
@@ -104,6 +151,8 @@ module.exports.loop = function () {
       if (cancelarOutras) {
         continue;
       }
+    } else if (creep.memory.role == "Archer") {
+      roleArcher.trabalhar(creep, emerg);
     } else if (creep.memory.role == "Builder") {
       roleBuilder.trabalhar(creep, emerg);
     } else if (creep.memory.role == "Healer") {
@@ -122,8 +171,21 @@ module.exports.loop = function () {
   var estruturas = creep.room.find(FIND_MY_STRUCTURES, {
     filter: (object) => object.structureType == "tower",
   });
+
+  var hostiles = creep.room.find(FIND_HOSTILE_CREEPS, {
+    filter: (hostil) => hostil.body.some((part) => part.type === HEAL),
+  });
+
+  if (hostiles == []) {
+    hostiles = creep.room.find(FIND_HOSTILE_CREEPS);
+  }
+
   for (var torre in estruturas) {
-    acfFunctions.torreRepair(estruturas[torre]);
+    if (hostiles == []) {
+      acfFunctions.torreRepair(estruturas[torre]);
+    } else {
+      acfFunctions.torreAttack(estruturas[torre], hostiles[0]);
+    }
   }
   // FIM TOWER ROLES
 };

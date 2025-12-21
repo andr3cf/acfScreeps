@@ -7,8 +7,6 @@ function minerarHarvester(creep) {
     creep.name == "Worker3" ||
     creep.name == "Worker4"
   ) {
-    console.log(creep.name);
-    console.log(creep.harvest(sources[0]));
     if (creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
       creep.moveByPath(creep.pos.findPathTo(sources[0]));
     }
@@ -32,7 +30,7 @@ function storeEnergy(creep) {
     filter: (object) =>
       object.structureType == "extension" && object.store["energy"] < 50,
   });
-  if (extensions == null || extensions == undefined) {
+  if (extensions == null || extensions == undefined || extensions == []) {
     extensions = creep.room.find(FIND_STRUCTURES, {
       filter: (object) =>
         object.structureType == "storage" && object.store["energy"] < 1000000,
@@ -167,7 +165,11 @@ var acfFunctions = {
       FIND_MY_CONSTRUCTION_SITES
     );
 
-    if (constructionSites == null || constructionSites == undefined) {
+    if (
+      constructionSites == null ||
+      constructionSites == undefined ||
+      constructionSites == []
+    ) {
       if (Game.spawns["Spawn1"].store["energy"] > 200) {
         if (
           creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE
@@ -263,6 +265,9 @@ var acfFunctions = {
       filter: (object) => object.hits < clamp(object.hitsMax / 6, 0, 10000),
     });
     torre.repair(structureTarget);
+  },
+  torreAttack(torre, hostileCreep) {
+    torre.attack(hostileCreep);
   },
 };
 
