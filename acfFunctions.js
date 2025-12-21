@@ -30,7 +30,11 @@ function storeEnergy(creep) {
     filter: (object) =>
       object.structureType == "extension" && object.store["energy"] < 50,
   });
-  if (extensions == null || extensions == undefined || extensions == []) {
+  if (
+    extensions == null ||
+    extensions == undefined ||
+    extensions.length === 0
+  ) {
     extensions = creep.room.find(FIND_STRUCTURES, {
       filter: (object) =>
         object.structureType == "storage" && object.store["energy"] < 1000000,
@@ -83,7 +87,7 @@ function storeEnergy(creep) {
           extensions.length == 0 ||
           extensions == null ||
           extensions == undefined ||
-          extensions == []
+          extensions.length === 0
         ) {
           return;
         } else {
@@ -168,7 +172,7 @@ var acfFunctions = {
     if (
       constructionSites == null ||
       constructionSites == undefined ||
-      constructionSites == []
+      constructionSites.length === 0
     ) {
       if (Game.spawns["Spawn1"].store["energy"] > 200) {
         if (

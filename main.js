@@ -152,7 +152,7 @@ module.exports.loop = function () {
         continue;
       }
     } else if (creep.memory.role == "Archer") {
-      roleArcher.trabalhar(creep, emerg);
+      roleArcher.trabalhar(creep);
     } else if (creep.memory.role == "Builder") {
       roleBuilder.trabalhar(creep, emerg);
     } else if (creep.memory.role == "Healer") {
@@ -176,12 +176,12 @@ module.exports.loop = function () {
     filter: (hostil) => hostil.body.some((part) => part.type === HEAL),
   });
 
-  if (hostiles == []) {
+  if (hostiles.length === 0) {
     hostiles = creep.room.find(FIND_HOSTILE_CREEPS);
   }
 
   for (var torre in estruturas) {
-    if (hostiles == []) {
+    if (hostiles.length === 0) {
       acfFunctions.torreRepair(estruturas[torre]);
     } else {
       acfFunctions.torreAttack(estruturas[torre], hostiles[0]);

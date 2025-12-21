@@ -1,18 +1,21 @@
-const acfFunctions = require("acfFunctions");
-
 var roleArcher = {
-  trabalhar(creep, emerg) {
-    // if (emerg) {
-    //   acfFunctions.mineracao(creep);
-    //   return;
-    // }
+  trabalhar(creep) {
+    var hostiles = creep.room.find(FIND_HOSTILE_CREEPS, {
+      filter: (hostil) => hostil.body.some((part) => part.type === HEAL),
+    });
 
-    var hostiles = creep.room.find(FIND_HOSTILE_CREEPS);
-    if (hostiles == []) {
+    if (hostiles.length === 0) {
+      hostiles = creep.room.find(FIND_HOSTILE_CREEPS);
+    }
+
+    if (hostiles.length === 0 || hostiles == undefined || hostiles == null) {
+      console.log("abaixar guarda");
+      creep.moveTo(10, 34);
       return;
     }
-    if (creep.rangedAttack(hostiles[1]) == ERR_NOT_IN_RANGE) {
-      creep.moveTo(hostiles[1]);
+
+    if (creep.rangedAttack(hostiles[0]) == ERR_NOT_IN_RANGE) {
+      creep.moveTo(hostiles[0]);
     }
   },
 };
