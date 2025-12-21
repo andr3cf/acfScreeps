@@ -7,8 +7,10 @@ function minerarHarvester(creep) {
     creep.name == "Worker3" ||
     creep.name == "Worker4"
   ) {
+    console.log(creep.name);
+    console.log(creep.harvest(sources[0]));
     if (creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-      creep.moveTo(sources[0]);
+      creep.moveByPath(creep.pos.findPathTo(sources[0]));
     }
   } else {
     if (creep.harvest(sources[1]) == ERR_NOT_IN_RANGE) {
