@@ -25,6 +25,7 @@ function minerarBuilder(creep) {
 }
 
 function storeEnergy(creep) {
+  // PEGANDO TODAS EXTENSIONS E AS MAIS PROXIMAS
   var extensions = creep.room.find(FIND_STRUCTURES, {
     filter: (object) =>
       object.structureType == "extension" && object.store["energy"] < 50,
@@ -35,29 +36,30 @@ function storeEnergy(creep) {
         object.structureType == "storage" && object.store["energy"] < 1000000,
     });
   }
+  var closestExtension = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+    filter: function (objeto) {
+      if (
+        !(
+          objeto.structureType == "extension" ||
+          objeto.structureType == "storage"
+        )
+      ) {
+        return false;
+      }
+
+      if (objeto.store.getFreeCapacity("energy") == 0) {
+        return false;
+      }
+
+      return true;
+    },
+  });
+  // --------------------------------
   if (
     creep.name == "Worker2" ||
     creep.name == "Worker3" ||
     creep.name == "Worker4"
   ) {
-    var closestExtension = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
-      filter: function (objeto) {
-        if (
-          !(
-            objeto.structureType == "extension" ||
-            objeto.structureType == "storage"
-          )
-        ) {
-          return false;
-        }
-
-        if (objeto.store.getFreeCapacity("energy") == 0) {
-          return false;
-        }
-
-        return true;
-      },
-    });
     if (closestExtension == null || closestExtension == undefined) {
       if (
         creep.transfer(Game.spawns["Spawn1"], RESOURCE_ENERGY) ==
@@ -83,24 +85,22 @@ function storeEnergy(creep) {
         }
       }
       return;
-    }
-    if (creep.transfer(closestExtension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-      creep.moveTo(closestExtension);
+    } else {
+      if (
+        creep.transfer(closestExtension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
+      ) {
+        creep.moveTo(closestExtension);
+      }
     }
   } else {
-    if (creep.transfer(Game.spawns["Spawn1"], RESOURCE_ENERGY) == ERR_FULL) {
-      if (
-        extensions.length == 0 ||
-        extensions == null ||
-        extensions == undefined ||
-        extensions == []
-      ) {
+    if (Game.spawns["Spawn1"].store["energy"] >= 300) {
+      if (closestExtension == null || closestExtension == undefined) {
         return;
       } else {
         if (
-          creep.transfer(extensions[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
+          creep.transfer(closestExtension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
         ) {
-          creep.moveTo(extensions[0]);
+          creep.moveTo(closestExtension);
         }
       }
     } else if (

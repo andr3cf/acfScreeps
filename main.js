@@ -20,9 +20,13 @@ module.exports.loop = function () {
         Game.creeps["Worker" + i] == null &&
         Game.spawns["Spawn1"].store["energy"] >= 200
       ) {
-        Game.spawns["Spawn1"].spawnCreep([MOVE, CARRY, WORK], "Worker" + i, {
-          memory: { role: "Worker" },
-        });
+        Game.spawns["Spawn1"].spawnCreep(
+          [MOVE, CARRY, WORK, WORK, WORK],
+          "Worker" + i,
+          {
+            memory: { role: "Worker" },
+          }
+        );
         break;
       }
     }
