@@ -13,7 +13,6 @@ module.exports.loop = function () {
   // INICIO SPAWNS
   if (creepsquantity < 14) {
     emerg = true;
-    console.log("emerg");
     for (var i = 0; i <= 4; i++) {
       if (
         Game.spawns["Spawn1"].spawning == null &&
