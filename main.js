@@ -3,6 +3,7 @@ const roleBuilder = require("role.builder");
 const roleRepair = require("role.repair");
 const roleHealer = require("role.healer");
 const roleClaimer = require("role.claimer");
+const roleUpgrader = require("role.upgrader");
 
 const acfFunctions = require("acfFunctions");
 
@@ -10,8 +11,9 @@ module.exports.loop = function () {
   var creepsquantity = Game.spawns["Spawn1"].room.find(FIND_MY_CREEPS).length;
   var emerg = false;
   // INICIO SPAWNS
-  if (creepsquantity < 12) {
+  if (creepsquantity < 14) {
     emerg = true;
+    console.log("emerg");
     for (var i = 0; i <= 4; i++) {
       if (
         Game.spawns["Spawn1"].spawning == null &&
@@ -60,6 +62,18 @@ module.exports.loop = function () {
         break;
       }
     }
+    for (var i = 0; i <= 1; i++) {
+      if (
+        Game.spawns["Spawn1"].spawning == null &&
+        Game.creeps["Upgrader" + i] == null &&
+        Game.spawns["Spawn1"].store["energy"] >= 300
+      ) {
+        Game.spawns["Spawn1"].spawnCreep([MOVE, CARRY, WORK], "Upgrader" + i, {
+          memory: { role: "Upgrader" },
+        });
+        break;
+      }
+    }
   }
   // FIM SPAWNS
 
@@ -93,6 +107,8 @@ module.exports.loop = function () {
       roleHealer.trabalhar(creep);
     } else if (creep.memory.role == "Claimer") {
       roleClaimer.trabalhar(creep);
+    } else if (creep.memory.role == "Upgrader") {
+      roleUpgrader.trabalhar(creep);
     } else {
       roleRepair.trabalhar(creep, emerg);
     }

@@ -29,7 +29,12 @@ function storeEnergy(creep) {
     filter: (object) =>
       object.structureType == "extension" && object.store["energy"] < 50,
   });
-
+  if (extensions == null || extensions == undefined) {
+    extensions = creep.room.find(FIND_STRUCTURES, {
+      filter: (object) =>
+        object.structureType == "storage" && object.store["energy"] < 1000000,
+    });
+  }
   if (
     creep.name == "Worker2" ||
     creep.name == "Worker3" ||
@@ -65,7 +70,8 @@ function storeEnergy(creep) {
         if (
           extensions.length == 0 ||
           extensions == null ||
-          extensions == undefined
+          extensions == undefined ||
+          extensions == []
         ) {
           return;
         } else {
@@ -82,17 +88,12 @@ function storeEnergy(creep) {
       creep.moveTo(closestExtension);
     }
   } else {
-    if (
-      creep.transfer(Game.spawns["Spawn1"], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
-    ) {
-      creep.moveTo(Game.spawns["Spawn1"]);
-    } else if (
-      creep.transfer(Game.spawns["Spawn1"], RESOURCE_ENERGY) == ERR_FULL
-    ) {
+    if (creep.transfer(Game.spawns["Spawn1"], RESOURCE_ENERGY) == ERR_FULL) {
       if (
         extensions.length == 0 ||
         extensions == null ||
-        extensions == undefined
+        extensions == undefined ||
+        extensions == []
       ) {
         return;
       } else {
@@ -102,17 +103,28 @@ function storeEnergy(creep) {
           creep.moveTo(extensions[0]);
         }
       }
+    } else if (
+      creep.transfer(Game.spawns["Spawn1"], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
+    ) {
+      creep.moveTo(Game.spawns["Spawn1"]);
     }
   }
 }
 
 function fullWithdraw(creep) {
   var freecap = creep.store.getFreeCapacity();
+  var closestStorage = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+    filter: (objeto) =>
+      (objeto.structureType == "extension" ||
+        objeto.structureType == "spawner" ||
+        objeto.structureType == "container" ||
+        objeto.structureType == "storage") &&
+      objeto.store["energy"] >= 50,
+  });
   if (
-    creep.withdraw(Game.spawns["Spawn1"], RESOURCE_ENERGY, freecap) ==
-    ERR_NOT_IN_RANGE
+    creep.withdraw(closestStorage, RESOURCE_ENERGY, freecap) == ERR_NOT_IN_RANGE
   ) {
-    creep.moveTo(16, 38);
+    creep.moveTo(closestStorage);
   }
 }
 
@@ -130,7 +142,7 @@ var acfFunctions = {
     if (creep.store.getFreeCapacity() > 0) {
       if (creep.memory.role == "Worker") {
         minerarHarvester(creep);
-      } else if ("Builder") {
+      } else if (creep.memory.role == "Builder") {
         minerarBuilder(creep);
       }
     } else {
