@@ -21,7 +21,7 @@ module.exports.loop = function () {
         Game.spawns["Spawn1"].store["energy"] >= 200
       ) {
         Game.spawns["Spawn1"].spawnCreep(
-          [MOVE, CARRY, WORK, WORK, WORK],
+          [MOVE, MOVE, CARRY, WORK, WORK, WORK],
           "Worker" + i,
           {
             memory: { role: "Worker" },
