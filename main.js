@@ -13,7 +13,7 @@ module.exports.loop = function () {
   var creepsquantity = Game.spawns["Spawn1"].room.find(FIND_MY_CREEPS).length;
   var emerg = false;
   // INICIO SPAWNS
-  if (creepsquantity < 18) {
+  if (creepsquantity < 20) {
     emerg = true;
     console.log("Emergency!");
     for (var i = 0; i <= 4; i++) {
@@ -68,7 +68,7 @@ module.exports.loop = function () {
         break;
       }
     }
-    for (var i = 0; i <= 1; i++) {
+    for (var i = 0; i <= 2; i++) {
       if (
         Game.spawns["Spawn1"].spawning == null &&
         Game.creeps["Upgrader" + i] == null &&
@@ -80,7 +80,7 @@ module.exports.loop = function () {
         break;
       }
     }
-    for (var i = 0; i <= 1; i++) {
+    for (var i = 0; i <= 2; i++) {
       if (
         Game.spawns["Spawn1"].spawning == null &&
         Game.creeps["Transporter" + i] == null &&
@@ -147,7 +147,7 @@ module.exports.loop = function () {
 
     if (creep.ticksToLive < 500) {
       creep.memory.needsRespawn = true;
-    } else if (creep.ticksToLive > 1200) {
+    } else if (creep.ticksToLive > 1400) {
       creep.memory.needsRespawn = false;
     }
 
