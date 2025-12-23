@@ -190,7 +190,7 @@ var acfFunctions = {
         creep.memory.target = null;
         return;
       }
-      if (estrutura.hits >= clamp(estrutura.hitsMax, 0, 20000)) {
+      if (estrutura.hits >= clamp(estrutura.hitsMax, 0, 50000)) {
         creep.memory.target = null;
       } else {
         reparar(creep);
@@ -231,7 +231,7 @@ var acfFunctions = {
   },
   torreRepair(torre) {
     var structureTarget = torre.pos.findClosestByPath(FIND_STRUCTURES, {
-      filter: (object) => object.hits < clamp(object.hitsMax / 6, 0, 10000),
+      filter: (object) => object.hits < clamp(object.hitsMax / 5, 0, 10000),
     });
     torre.repair(structureTarget);
   },

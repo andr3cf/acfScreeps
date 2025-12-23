@@ -15,7 +15,6 @@ module.exports.loop = function () {
   // INICIO SPAWNS
   if (creepsquantity < 20) {
     emerg = true;
-    console.log("Emergency!");
     for (var i = 0; i <= 4; i++) {
       if (
         Game.spawns["Spawn1"].spawning == null &&
@@ -145,17 +144,21 @@ module.exports.loop = function () {
   for (var name in Game.creeps) {
     var creep = Game.creeps[name];
 
-    if (creep.ticksToLive < 500) {
+    if (creep.ticksToLive < 320) {
       creep.memory.needsRespawn = true;
-    } else if (creep.ticksToLive > 1400) {
+    } else if (creep.ticksToLive > 1100) {
       creep.memory.needsRespawn = false;
     }
 
     if (creep.memory.needsRespawn === true) {
-      if (Game.spawns["Spawn1"].renewCreep(creep) == ERR_NOT_IN_RANGE) {
+      var tentativa = Game.spawns["Spawn1"].renewCreep(creep);
+      if (tentativa != ERR_NOT_IN_RANGE && tentativa != ERR_NOT_ENOUGH_ENERGY) {
+        console.log("Novo erro:" + tentativa);
+      }
+      if (tentativa == ERR_NOT_IN_RANGE) {
         creep.moveTo(14, 38);
       } else if (
-        Game.spawns["Spawn1"].renewCreep(creep) == ERR_NOT_ENOUGH_ENERGY &&
+        tentativa == ERR_NOT_ENOUGH_ENERGY &&
         creep.store["energy"] > 0
       ) {
         creep.transfer(Game.spawns["Spawn1"], RESOURCE_ENERGY);

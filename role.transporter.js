@@ -1,10 +1,14 @@
 //const acfFunctions = require("acfFunctions");
 
-const origemStructureID = "b63378a0b7f72df";
+const origemStructureID1 = "b63378a0b7f72df";
+const origemStructureID2 = "b63378a0b7f72df";
 
 var roleTransporter = {
   trabalhar(creep) {
-    var container = Game.getObjectById(origemStructureID);
+    var container = Game.getObjectById(origemStructureID1);
+    if (creep.name == "Transporter3" || creep.name == "Transporter4") {
+      container = Game.getObjectById(origemStructureID2);
+    }
     if (creep.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
       if (container.store["energy"] >= 50) {
         if (
