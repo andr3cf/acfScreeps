@@ -5,7 +5,6 @@ var prioridade = false;
 var roleBuilder = {
   trabalhar(creep, emerg) {
     if (emerg) {
-      acfFunctions.mineracao(creep);
       return;
     }
 

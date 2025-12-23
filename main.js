@@ -13,7 +13,7 @@ module.exports.loop = function () {
   var creepsquantity = Game.spawns["Spawn1"].room.find(FIND_MY_CREEPS).length;
   var emerg = false;
   // INICIO SPAWNS
-  if (creepsquantity < 21) {
+  if (creepsquantity < 23) {
     emerg = true;
     for (var i = 0; i <= 4; i++) {
       if (
@@ -31,7 +31,7 @@ module.exports.loop = function () {
         break;
       }
     }
-    for (var i = 0; i <= 1; i++) {
+    for (var i = 0; i <= 3; i++) {
       if (
         Game.spawns["Spawn1"].spawning == null &&
         Game.creeps["Builder" + i] == null &&
@@ -157,7 +157,7 @@ module.exports.loop = function () {
         tentativa != ERR_NOT_ENOUGH_ENERGY &&
         tentativa != 0
       ) {
-        console.log("Novo erro:" + tentativa);
+        console.log("Novo erro:" + tentativa + " (" + creep.name + ")");
       }
       if (tentativa == ERR_NOT_IN_RANGE) {
         creep.moveTo(14, 38);
