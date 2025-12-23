@@ -26,27 +26,42 @@ function minerarBuilder(creep) {
 
 function storeEnergy(creep) {
   var closestExtension = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
-    filter: function (objeto) {
-      if (
-        objeto.structureType != "extension" ||
-        objeto.store.getFreeCapacity("energy") == 0
-      ) {
-        return false;
-      }
-      return true;
-    },
+    filter: (objeto) =>
+      objeto.structureType == "extension" && objeto.store[RESOURCE_ENERGY] < 50,
+  });
+  var closestContainer = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+    filter: (objeto) => objeto.structureType == "container",
   });
   if (creep.name == "Worker0" || creep.name == "Worker1") {
     if (Game.spawns["Spawn1"].store["energy"] >= 300) {
-      if (closestExtension == null || closestExtension == undefined) {
-        return;
-      } else {
+      // ----------------------
+      if (
+        closestContainer == null ||
+        closestContainer == undefined ||
+        closestContainer.store["energy"] >= 5000
+      ) {
         if (
           creep.transfer(closestExtension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
         ) {
           creep.moveTo(closestExtension);
         }
+      } else {
+        if (
+          creep.transfer(closestContainer, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
+        ) {
+          creep.moveTo(closestContainer);
+        }
       }
+      // ----------------------
+      // if (closestExtension == null || closestExtension == undefined) {
+      //   return;
+      // } else {
+      //   if (
+      //     creep.transfer(closestExtension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
+      //   ) {
+      //     creep.moveTo(closestExtension);
+      //   }
+      // }
     } else if (
       creep.transfer(Game.spawns["Spawn1"], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
     ) {
@@ -57,9 +72,6 @@ function storeEnergy(creep) {
     creep.name == "Worker3" ||
     creep.name == "Worker4"
   ) {
-    var closestContainer = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-      filter: (objeto) => objeto.structureType == "container",
-    });
     if (
       closestContainer == null ||
       closestContainer == undefined ||

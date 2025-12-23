@@ -1,7 +1,7 @@
 //const acfFunctions = require("acfFunctions");
 
 const origemStructureID1 = "b63378a0b7f72df";
-const origemStructureID2 = "b63378a0b7f72df";
+const origemStructureID2 = "beb490fb28bc803";
 
 var roleTransporter = {
   trabalhar(creep) {
@@ -9,6 +9,7 @@ var roleTransporter = {
     if (creep.name == "Transporter3" || creep.name == "Transporter4") {
       container = Game.getObjectById(origemStructureID2);
     }
+    //console.log(creep.name + " - " + container.pos);
     if (creep.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
       if (container.store["energy"] >= 50) {
         if (
@@ -21,7 +22,11 @@ var roleTransporter = {
           creep.moveTo(container);
         }
       } else {
-        creep.moveTo(37, 25);
+        if (creep.name == "Transporter3" || creep.name == "Transporter4") {
+          creep.moveTo(21, 40);
+        } else {
+          creep.moveTo(37, 25);
+        }
       }
     } else {
       var closestExtension = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
@@ -30,7 +35,11 @@ var roleTransporter = {
           objeto.store[RESOURCE_ENERGY] < 50,
       });
       if (closestExtension == null || closestExtension == undefined) {
-        creep.moveTo(37, 25);
+        if (creep.name == "Transporter3" || creep.name == "Transporter4") {
+          creep.moveTo(21, 40);
+        } else {
+          creep.moveTo(37, 25);
+        }
       } else {
         if (
           creep.transfer(closestExtension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
