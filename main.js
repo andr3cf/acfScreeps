@@ -5,6 +5,7 @@ const roleHealer = require("role.healer");
 const roleClaimer = require("role.claimer");
 const roleUpgrader = require("role.upgrader");
 const roleArcher = require("role.archer");
+const roleTransporter = require("role.transporter");
 
 const acfFunctions = require("acfFunctions");
 
@@ -12,8 +13,9 @@ module.exports.loop = function () {
   var creepsquantity = Game.spawns["Spawn1"].room.find(FIND_MY_CREEPS).length;
   var emerg = false;
   // INICIO SPAWNS
-  if (creepsquantity < 16) {
+  if (creepsquantity < 18) {
     emerg = true;
+    console.log("Emergency!");
     for (var i = 0; i <= 4; i++) {
       if (
         Game.spawns["Spawn1"].spawning == null &&
@@ -81,6 +83,18 @@ module.exports.loop = function () {
     for (var i = 0; i <= 1; i++) {
       if (
         Game.spawns["Spawn1"].spawning == null &&
+        Game.creeps["Transporter" + i] == null &&
+        Game.spawns["Spawn1"].store["energy"] >= 300
+      ) {
+        Game.spawns["Spawn1"].spawnCreep([MOVE, CARRY], "Transporter" + i, {
+          memory: { role: "Transporter" },
+        });
+        break;
+      }
+    }
+    for (var i = 0; i <= 1; i++) {
+      if (
+        Game.spawns["Spawn1"].spawning == null &&
         Game.creeps["Archer" + i] == null &&
         Game.spawns["Spawn1"].store["energy"] >= 300
       ) {
@@ -128,12 +142,16 @@ module.exports.loop = function () {
   // FIM SPAWNS
 
   // INICIO CREEP ROLES
-  var cancelarOutras = false;
   for (var name in Game.creeps) {
     var creep = Game.creeps[name];
 
-    if (creep.ticksToLive < 200) {
-      cancelarOutras = true;
+    if (creep.ticksToLive < 500) {
+      creep.memory.needsRespawn = true;
+    } else if (creep.ticksToLive > 1200) {
+      creep.memory.needsRespawn = false;
+    }
+
+    if (creep.memory.needsRespawn === true) {
       if (Game.spawns["Spawn1"].renewCreep(creep) == ERR_NOT_IN_RANGE) {
         creep.moveTo(14, 38);
       } else if (
@@ -148,9 +166,8 @@ module.exports.loop = function () {
 
     if (creep.memory.role == "Worker") {
       roleHarvester.trabalhar(creep);
-      if (cancelarOutras) {
-        continue;
-      }
+    } else if (creep.memory.role == "Transporter") {
+      roleTransporter.trabalhar(creep);
     } else if (creep.memory.role == "Archer") {
       roleArcher.trabalhar(creep);
     } else if (creep.memory.role == "Builder") {

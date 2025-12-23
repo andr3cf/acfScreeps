@@ -57,13 +57,8 @@ function storeEnergy(creep) {
     creep.name == "Worker3" ||
     creep.name == "Worker4"
   ) {
-    var closestContainer = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
-      filter: function (objeto) {
-        if (objeto.structureType != "container") {
-          return false;
-        }
-        return true;
-      },
+    var closestContainer = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+      filter: (objeto) => objeto.structureType == "container",
     });
     if (
       closestContainer == null ||
@@ -82,112 +77,17 @@ function storeEnergy(creep) {
         creep.moveTo(closestContainer);
       }
     }
+  } else {
+    if (closestExtension == null || closestExtension == undefined) {
+      return;
+    } else {
+      if (
+        creep.transfer(closestExtension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
+      ) {
+        creep.moveTo(closestExtension);
+      }
+    }
   }
-
-  // // PEGANDO TODAS EXTENSIONS E AS MAIS PROXIMAS
-  // var extensions = creep.room.find(FIND_STRUCTURES, {
-  //   filter: (object) =>
-  //     object.structureType == "container" && object.store["2000"] < 50,
-  // });
-  // if (extensions.length === 0){
-  //   extensions = creep.room.find(FIND_STRUCTURES, {
-  //     filter: (object) =>
-  //       object.structureType == "extension" && object.store["energy"] < 50,
-  //   });
-  // }
-  // if (
-  //   extensions == null ||
-  //   extensions == undefined ||
-  //   extensions.length === 0
-  // ) {
-  //   extensions = creep.room.find(FIND_STRUCTURES, {
-  //     filter: (object) =>
-  //       object.structureType == "storage" && object.store["energy"] < 1000000,
-  //   });
-  // }
-  // var closestExtension = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
-  //   filter: function (objeto) {
-  //     if (objeto.structureType != "extension") {
-  //       return false;
-  //     }
-
-  //     if (objeto.store.getFreeCapacity("energy") == 0) {
-  //       return false;
-  //     }
-
-  //     return true;
-  //   },
-  // });
-  // if (closestExtension == null || closestExtension == undefined) {
-  //   closestExtension = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
-  //     filter: function (objeto) {
-  //       if (objeto.structureType != "storage") {
-  //         return false;
-  //       }
-
-  //       if (objeto.store.getFreeCapacity("energy") == 0) {
-  //         return false;
-  //       }
-
-  //       return true;
-  //     },
-  //   });
-  // }
-  // // --------------------------------
-  // if (
-  //   creep.name == "Worker2" ||
-  //   creep.name == "Worker3" ||
-  //   creep.name == "Worker4"
-  // ) {
-  //   if (closestExtension == null || closestExtension == undefined) {
-  //     if (
-  //       creep.transfer(Game.spawns["Spawn1"], RESOURCE_ENERGY) ==
-  //       ERR_NOT_IN_RANGE
-  //     ) {
-  //       creep.moveTo(Game.spawns["Spawn1"]);
-  //     } else if (
-  //       creep.transfer(Game.spawns["Spawn1"], RESOURCE_ENERGY) == ERR_FULL
-  //     ) {
-  //       if (
-  //         extensions.length == 0 ||
-  //         extensions == null ||
-  //         extensions == undefined ||
-  //         extensions.length === 0
-  //       ) {
-  //         return;
-  //       } else {
-  //         if (
-  //           creep.transfer(extensions[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
-  //         ) {
-  //           creep.moveTo(extensions[0]);
-  //         }
-  //       }
-  //     }
-  //     return;
-  //   } else {
-  //     if (
-  //       creep.transfer(closestExtension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
-  //     ) {
-  //       creep.moveTo(closestExtension);
-  //     }
-  //   }
-  // } else {
-  //   if (Game.spawns["Spawn1"].store["energy"] >= 300) {
-  //     if (closestExtension == null || closestExtension == undefined) {
-  //       return;
-  //     } else {
-  //       if (
-  //         creep.transfer(closestExtension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
-  //       ) {
-  //         creep.moveTo(closestExtension);
-  //       }
-  //     }
-  //   } else if (
-  //     creep.transfer(Game.spawns["Spawn1"], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
-  //   ) {
-  //     creep.moveTo(Game.spawns["Spawn1"]);
-  //   }
-  // }
 }
 
 function fullWithdraw(creep) {
