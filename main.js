@@ -152,13 +152,13 @@ module.exports.loop = function () {
 
     if (creep.memory.needsRespawn === true) {
       var tentativa = Game.spawns["Spawn1"].renewCreep(creep);
-      if (
-        tentativa != ERR_NOT_IN_RANGE &&
-        tentativa != ERR_NOT_ENOUGH_ENERGY &&
-        tentativa != 0
-      ) {
-        console.log("Novo erro:" + tentativa + " (" + creep.name + ")");
-      }
+      // if (
+      //   tentativa != ERR_NOT_IN_RANGE &&
+      //   tentativa != ERR_NOT_ENOUGH_ENERGY &&
+      //   tentativa != 0
+      // ) {
+      //   console.log("Novo erro:" + tentativa + " (" + creep.name + ")");
+      // }
       if (tentativa == ERR_NOT_IN_RANGE) {
         creep.moveTo(14, 38);
       } else if (

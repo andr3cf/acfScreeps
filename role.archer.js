@@ -13,8 +13,13 @@ var roleArcher = {
       return;
     }
 
-    if (creep.rangedAttack(hostiles[0]) == ERR_NOT_IN_RANGE) {
+    var tentativa = creep.rangedAttack(hostiles[0]);
+    //console.log(tentativa);
+
+    if (tentativa == ERR_NOT_IN_RANGE) {
       creep.moveTo(hostiles[0]);
+    } else if (tentativa == ERR_NOT_IN_RANGE) {
+      // something else
     }
   },
 };
