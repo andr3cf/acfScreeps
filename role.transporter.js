@@ -10,7 +10,7 @@ var roleTransporter = {
       container = Game.getObjectById(origemStructureID2);
     }
     if (container == null) {
-      creep.moveTo(16, 40);
+      creep.moveTo(37, 25);
       return;
     }
     //console.log(creep.name + " - " + container.pos);

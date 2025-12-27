@@ -5,6 +5,7 @@ var prioridade = false;
 var roleBuilder = {
   trabalhar(creep, emerg) {
     if (emerg) {
+      creep.moveTo(21, 37);
       return;
     }
 

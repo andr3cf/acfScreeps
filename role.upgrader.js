@@ -3,7 +3,7 @@ const acfFunctions = require("acfFunctions");
 var roleUpgrader = {
   trabalhar(creep, emerg) {
     if (emerg) {
-      acfFunctions.mineracao(creep);
+      creep.moveTo(21, 40);
       return;
     }
     acfFunctions.repararController(creep);
