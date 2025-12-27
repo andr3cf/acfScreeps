@@ -13,9 +13,13 @@ module.exports.loop = function () {
   var creepsquantity = Game.spawns["Spawn1"].room.find(FIND_MY_CREEPS).length;
   var emerg = false;
   // INICIO SPAWNS
-  if (creepsquantity < 23) {
+  spawning: if (creepsquantity < 23) {
     emerg = true;
+    ntemworkers = false;
     for (var i = 0; i <= 4; i++) {
+      if (Game.creeps["Worker" + i] == null) {
+        ntemworkers = true;
+      }
       if (
         Game.spawns["Spawn1"].spawning == null &&
         Game.creeps["Worker" + i] == null &&
@@ -30,6 +34,9 @@ module.exports.loop = function () {
         );
         break;
       }
+    }
+    if (ntemworkers) {
+      break spawning;
     }
     for (var i = 0; i <= 3; i++) {
       if (
@@ -192,16 +199,16 @@ module.exports.loop = function () {
   // FIM CREEP ROLES
 
   // INICIO TOWER ROLES
-  var estruturas = creep.room.find(FIND_MY_STRUCTURES, {
+  var estruturas = Game.spawns["Spawn1"].room.find(FIND_MY_STRUCTURES, {
     filter: (object) => object.structureType == "tower",
   });
 
-  var hostiles = creep.room.find(FIND_HOSTILE_CREEPS, {
+  var hostiles = Game.spawns["Spawn1"].room.find(FIND_HOSTILE_CREEPS, {
     filter: (hostil) => hostil.body.some((part) => part.type === HEAL),
   });
 
   if (hostiles.length === 0) {
-    hostiles = creep.room.find(FIND_HOSTILE_CREEPS);
+    hostiles = Game.spawns["Spawn1"].room.find(FIND_HOSTILE_CREEPS);
   }
 
   for (var torre in estruturas) {

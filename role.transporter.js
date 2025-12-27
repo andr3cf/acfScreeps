@@ -9,6 +9,10 @@ var roleTransporter = {
     if (creep.name == "Transporter3" || creep.name == "Transporter4") {
       container = Game.getObjectById(origemStructureID2);
     }
+    if (container == null) {
+      creep.moveTo(16, 40);
+      return;
+    }
     //console.log(creep.name + " - " + container.pos);
     if (creep.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
       if (container.store["energy"] >= 50) {
