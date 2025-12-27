@@ -1,7 +1,7 @@
 //const acfFunctions = require("acfFunctions");
 
 const origemStructureID1 = "b63378a0b7f72df";
-const origemStructureID2 = "beb490fb28bc803";
+const origemStructureID2 = "77880a0d7d9c984";
 
 var roleTransporter = {
   trabalhar(creep) {
@@ -13,7 +13,7 @@ var roleTransporter = {
       creep.moveTo(37, 25);
       return;
     }
-    //console.log(creep.name + " - " + container.pos);
+    console.log(creep.name + " - " + container.pos);
     if (creep.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
       if (container.store["energy"] >= 50) {
         if (

@@ -13,7 +13,8 @@ module.exports.loop = function () {
   var creepsquantity = Game.spawns["Spawn1"].room.find(FIND_MY_CREEPS).length;
   var emerg = false;
   // INICIO SPAWNS
-  spawning: if (creepsquantity < 23) {
+  spawning: if (creepsquantity < 21) {
+    // WITHOUT PVP CREEPS
     emerg = true;
     ntemworkers = false;
     for (var i = 0; i <= 4; i++) {
@@ -98,52 +99,52 @@ module.exports.loop = function () {
         break;
       }
     }
-    for (var i = 0; i <= 1; i++) {
-      if (
-        Game.spawns["Spawn1"].spawning == null &&
-        Game.creeps["Archer" + i] == null &&
-        Game.spawns["Spawn1"].store["energy"] >= 300
-      ) {
-        Game.spawns["Spawn1"].spawnCreep(
-          [
-            TOUGH,
-            TOUGH,
-            TOUGH,
-            TOUGH,
-            TOUGH,
-            TOUGH,
-            TOUGH,
-            TOUGH,
-            TOUGH,
-            TOUGH,
-            TOUGH,
-            TOUGH,
-            TOUGH,
-            TOUGH,
-            TOUGH,
-            TOUGH,
-            TOUGH,
-            TOUGH,
-            TOUGH,
-            TOUGH,
-            MOVE,
-            MOVE,
-            MOVE,
-            MOVE,
-            MOVE,
-            MOVE,
-            MOVE,
-            MOVE,
-            RANGED_ATTACK,
-          ],
-          "Archer" + i,
-          {
-            memory: { role: "Archer" },
-          }
-        );
-        break;
-      }
-    }
+    // for (var i = 0; i <= 1; i++) {
+    //   if (
+    //     Game.spawns["Spawn1"].spawning == null &&
+    //     Game.creeps["Archer" + i] == null &&
+    //     Game.spawns["Spawn1"].store["energy"] >= 300
+    //   ) {
+    //     Game.spawns["Spawn1"].spawnCreep(
+    //       [
+    //         TOUGH,
+    //         TOUGH,
+    //         TOUGH,
+    //         TOUGH,
+    //         TOUGH,
+    //         TOUGH,
+    //         TOUGH,
+    //         TOUGH,
+    //         TOUGH,
+    //         TOUGH,
+    //         TOUGH,
+    //         TOUGH,
+    //         TOUGH,
+    //         TOUGH,
+    //         TOUGH,
+    //         TOUGH,
+    //         TOUGH,
+    //         TOUGH,
+    //         TOUGH,
+    //         TOUGH,
+    //         MOVE,
+    //         MOVE,
+    //         MOVE,
+    //         MOVE,
+    //         MOVE,
+    //         MOVE,
+    //         MOVE,
+    //         MOVE,
+    //         RANGED_ATTACK,
+    //       ],
+    //       "Archer" + i,
+    //       {
+    //         memory: { role: "Archer" },
+    //       }
+    //     );
+    //     break;
+    //   }
+    // }
   }
   // FIM SPAWNS
 
