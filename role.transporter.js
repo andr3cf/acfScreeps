@@ -13,7 +13,7 @@ var roleTransporter = {
       creep.moveTo(37, 25);
       return;
     }
-    console.log(creep.name + " - " + container.pos);
+    //console.log(creep.name + " - " + container.pos);
     if (creep.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
       if (container.store["energy"] >= 50) {
         if (
