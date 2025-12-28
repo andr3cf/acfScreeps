@@ -159,21 +159,12 @@ var acfFunctions = {
       ) {
         fullWithdraw(creep);
       }
-    } else if (
-      creep.build(constructionSites) == ERR_NOT_ENOUGH_RESOURCES &&
-      Game.spawns["Spawn1"].store["energy"] > 200
-    ) {
+    } else if (creep.build(constructionSites) == ERR_NOT_ENOUGH_RESOURCES) {
       fullWithdraw(creep);
     } else if (creep.build(constructionSites) == ERR_NOT_IN_RANGE) {
-      if (
-        creep.store.getFreeCapacity() > 0 &&
-        Game.spawns["Spawn1"].store["energy"] > 200
-      ) {
+      if (creep.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
         fullWithdraw(creep);
-      } else if (
-        creep.store.getFreeCapacity("energy") <
-        creep.store.getCapacity("energy")
-      ) {
+      } else {
         creep.moveTo(constructionSites);
       }
     }
