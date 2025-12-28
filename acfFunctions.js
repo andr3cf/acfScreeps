@@ -187,14 +187,14 @@ var acfFunctions = {
         creep.memory.target = null;
         return;
       }
-      if (estrutura.hits >= clamp(estrutura.hitsMax, 0, 50000)) {
+      if (estrutura.hits >= clamp(estrutura.hitsMax, 0, 100000)) {
         creep.memory.target = null;
       } else {
         reparar(creep);
       }
     } else {
       var structureTarget = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-        filter: (object) => object.hits < clamp(object.hitsMax / 4, 0, 10000),
+        filter: (object) => object.hits < clamp(object.hitsMax / 4, 0, 70000),
       });
       if (structureTarget == null) {
         creep.memory.target = null;
