@@ -9,7 +9,7 @@ var roleArcher = {
     }
 
     if (hostiles.length === 0 || hostiles == undefined || hostiles == null) {
-      creep.moveTo(10, 34);
+      creep.moveTo(12, 32);
       return;
     }
 
