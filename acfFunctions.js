@@ -227,8 +227,9 @@ var acfFunctions = {
     }
   },
   torreRepair(torre) {
+    //console.log("test");
     var structureTarget = torre.pos.findClosestByPath(FIND_STRUCTURES, {
-      filter: (object) => object.hits < clamp(object.hitsMax / 5, 0, 10000),
+      filter: (object) => object.hits < clamp(object.hitsMax / 5, 0, 60000),
     });
     torre.repair(structureTarget);
   },
